@@ -1,5 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -7,7 +8,18 @@ import axios from 'axios'
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'https://api.example.com' })
+const api = axios.create(
+
+  {
+    baseURL: 'http://192.168.0.189:3002',
+    headers: {
+      //Authorization: `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${token}`
+    }
+  },
+
+  )
+
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

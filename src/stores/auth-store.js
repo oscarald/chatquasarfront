@@ -6,6 +6,7 @@ export const useAuthStore = defineStore('counter', {
     username: '',
     idUser: '',
     test : false,
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
 
   }),
   getters: {
@@ -37,6 +38,14 @@ export const useAuthStore = defineStore('counter', {
         const msg = await api.post('/chat/message', {message, id: this.idUser})
         console.log(msg.data)
 
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async refreshToken (token){
+      try {
+        const refresh = await api.post('/chat/refresh', {token})
+        console.log(refresh.data)
       } catch (error) {
         console.log(error)
       }

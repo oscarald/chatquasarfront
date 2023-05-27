@@ -1,5 +1,8 @@
 import { boot } from 'quasar/wrappers'
+import { useAuthStore } from "src/stores/auth-store";
 import axios from 'axios'
+
+const authStore = useAuthStore();
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
 
 // Be careful when using SSR for cross-request state pollution
@@ -14,7 +17,7 @@ const api = axios.create(
     baseURL: 'http://192.168.0.189:3002',
     headers: {
       //Authorization: `Bearer ${localStorage.getItem('token')}`
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${authStore.token}`
     }
   },
 

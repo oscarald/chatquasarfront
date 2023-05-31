@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('counter', {
   actions: {
     async signin (username, password){
       try {
-        const user = await api.post('/chat/login', {username, password})
+        const user = await api.post('/auth/login', {username, password})
         console.log(user.data)
         return true
       } catch (error) {
@@ -24,7 +24,7 @@ export const useAuthStore = defineStore('counter', {
     },
     async login (username, password){
       try {
-        const user = await api.post('/chat/login', {username, password})
+        const user = await api.post('/auth/login', {username, password})
         console.log(user.data)
         this.username = user.data.username
         this.idUser = user.data._id
@@ -44,7 +44,7 @@ export const useAuthStore = defineStore('counter', {
     },
     async refreshToken (token){
       try {
-        const refresh = await api.post('/chat/refresh', {token})
+        const refresh = await api.post('/auth/refresh', {token})
         console.log(refresh.data)
       } catch (error) {
         console.log(error)

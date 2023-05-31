@@ -15,10 +15,12 @@ const api = axios.create(
 
   {
     baseURL: 'http://192.168.0.189:3002',
+    withCredentials: true,
     headers: {
       //Authorization: `Bearer ${localStorage.getItem('token')}`
       'Authorization': `Bearer ${authStore.token}`
-    }
+    },
+
   },
 
   )

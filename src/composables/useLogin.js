@@ -16,7 +16,7 @@ const useLogin = () => {
     const login = await authStore.login(username.value, password.value);
 
     if (login) {
-      router.push("/chat");
+      router.push("/test");
     } else {
       $q.notify({
         type: "negative",

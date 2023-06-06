@@ -1,6 +1,7 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
+import { LocalStorage } from 'quasar'
 
 
 
@@ -13,7 +14,7 @@ import routes from './routes'
  * with the Router instance.
  */
 
-//import { useAuthStore } from 'src/stores/auth-store';
+import { useAuthStore } from 'src/stores/auth-store';
 
 
 export default route(function (/* { store, ssrContext } */) {
@@ -33,8 +34,31 @@ export default route(function (/* { store, ssrContext } */) {
 
 
   Router.beforeEach(async (to, from, next) => {
-    //const authStore = useAuthStore()
+    const authStore = useAuthStore()
 
+
+    authStore.interceptors()
+    const timeRefresh = await authStore.checkTimeRefresh()
+    //console.log('timeRefresh', timeRefresh)
+    //console.log('requiredAuth', requiredAuth)
+
+    if(to.matched.some(route => route.meta.auth)){
+      if(!authStore.token){
+        return next("/")
+      } else {
+        return next()
+      }
+    } else {
+      return next()
+    }
+
+    /* if(!requiredAuth ){
+
+        return next()
+
+    } else {
+      return next("/")
+    } */
     return next()
   })
 

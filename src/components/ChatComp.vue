@@ -4,7 +4,8 @@ import { ref, watch, onMounted } from 'vue'
 import VueSocketIOExt from 'vue-socket.io-extended';
 import { io } from 'socket.io-client';
 import { useAuthStore } from "src/stores/auth-store";
-//import {socket} from 'src/utils/sock'
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const authStore = useAuthStore();
 const socket = io('http://192.168.0.189:3002', { transports: ['websocket'] });
@@ -24,6 +25,9 @@ const sendMessage = async () => {
   message.value = '';
   //messages.value = [{ name: 'Me', text: message.value }, ...messages.value];
 };
+const cambiarRuta = () => {
+  router.push("/test");
+}
 
 onMounted(() => {
   socket.on('chat', (msg) => {
@@ -67,6 +71,7 @@ onMounted(() => {
 
 
     </div>
+    <q-btn label="cambiar" @click="cambiarRuta"/>
   </div>
 </template>
 

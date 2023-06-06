@@ -1,8 +1,7 @@
 import { boot } from 'quasar/wrappers'
-import { useAuthStore } from 'src/stores/auth-store';
 import axios from 'axios'
 
-const {token} = useAuthStore();
+
 //const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
 
 // Be careful when using SSR for cross-request state pollution
@@ -29,12 +28,12 @@ const api = axios.create(
 
   )
 
-api.interceptors.request.use(
+/* api.interceptors.request.use(
   request => {
     request.headers.Authorization = `Bearer ${token}`
     return request
   }
-)
+) */
 
 
 export default boot(({ app }) => {

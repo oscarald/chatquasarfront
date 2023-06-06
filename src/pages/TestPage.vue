@@ -3,6 +3,8 @@ import {socket} from 'src/utils/sock'
 import { ref, watch, onMounted } from 'vue'
 import useCounter from 'src/composables/useCounter';
 import { useAuthStore } from 'src/stores/auth-store';
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const {token, refreshToken, test, proting, servidor} = useAuthStore();
 
@@ -42,6 +44,10 @@ const refresh = () => {
 const probandoando = () => {
   proting()
 }
+
+const cambiarRuta = () => {
+  router.push("/chat");
+}
 </script>
 <template>
   <div>
@@ -60,12 +66,18 @@ const probandoando = () => {
     {{number}}
   </div>
   <div class="flex flex-center">
-    <q-btn label="Refresh" @click="refresh"/>
+    <q-btn label="Refresh token" @click="refresh"/>
 
     {{number}}
   </div>
   <div class="flex flex-center">
-    <q-btn label="test" @click="probandoando"/>
+    <q-btn label="Verificar token" @click="probandoando"/>
+    {{ authStore.servidor }}
+
+  </div>
+
+  <div class="flex flex-center">
+    <q-btn label="ir al chat" @click="cambiarRuta"/>
     {{ authStore.servidor }}
 
   </div>

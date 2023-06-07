@@ -1,24 +1,34 @@
 import { ref, onMounted } from 'vue'
 import { useConfigStore } from 'src/stores/config-store'
+import { storeToRefs } from 'pinia'
 
 
 const useConfig = () => {
 
 const useConfigSt = useConfigStore()
+const {timeToken, timeRefreshToken} = storeToRefs(useConfigSt)
 
+const typeToken = ref('token')
 const minutes = ref('')
 const counter = ref(0)
-const model = ref('')
+const model = ref('Minuto')
 const options = ['Hora', 'Minuto', 'Segundo']
+const inputRef = ref(null)
 
-onMounted(() => {
+
+
+onMounted( () => {
   useConfigSt.getConfig()
+
 })
 
 const setTime = () => {
+  useConfigSt.setConfig(typeToken.value, minutes.value, model.value)
+  minutes.value = ''
   restartTime()
+  /* restartTime()
   counter.value = minutes.value
-  decrementCounter()
+  decrementCounter() */
 }
 let interval
 
@@ -33,9 +43,11 @@ const decrementCounter = () => {
 }
 
 const restartTime = () => {
-  counter.value = 0
+
+  inputRef.value.resetValidation()
+  /* counter.value = 0
   clearInterval(interval)
-  useConfigSt.getConfig()
+  useConfigSt.getConfig() */
 }
 
 return {
@@ -44,7 +56,11 @@ return {
   setTime,
   restartTime,
   model,
-  options
+  options,
+  timeToken : timeToken ,
+  timeRefreshToken : timeRefreshToken,
+  typeToken,
+  inputRef
 }
 
 }
